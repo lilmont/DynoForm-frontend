@@ -1,17 +1,17 @@
-name: Build and Push Frontend Docker Image
+name: Build and Deploy Dynoform API to Docker Hub
 
 on:
   push:
     branches:
-      - main # Trigger on push to the main branch. Update if needed.
+      - main  # Trigger on push to the main branch. Update if your default branch is different.
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the repository
-      - name: Checkout repository
+      # Step 1: Checkout the repository
+      - name: Checkout Code
         uses: actions/checkout@v3
 
       # Step 2: Set up Docker Buildx
@@ -25,13 +25,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Step 4: Build and push Docker image
+      # Step 4: Build and Push Docker Image
       - name: Build and Push Docker Image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./Dockerfile # Path to your Dockerfile
-          push: true
-          tags: |
-            ${{ secrets.DOCKER_USERNAME }}/dynoform-frontend:latest
-            ${{ secrets.DOCKER_USERNAME }}/dynoform-frontend:${{ github.sha }}
+        run: |
+          docker build -t niloomont/dynoform:latest -f DynoForm.backend/DynoForm.backend/Dockerfile DynoForm.backend/DynoForm.backend
+          docker build -t niloomont/dynoform:${{ github.sha }} -f DynoForm.backend/DynoForm.backend/Dockerfile DynoForm.backend/DynoForm.backend
+          docker push niloomont/dynoform:latest
+          docker push niloomont/dynoform:${{ github.sha }}
