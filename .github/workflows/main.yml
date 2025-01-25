@@ -1,4 +1,4 @@
-name: Build and Deploy Dynoform API to Docker Hub
+name: Build and Deploy Dynoform Frontend to Docker Hub
 
 on:
   push:
@@ -28,7 +28,5 @@ jobs:
       # Step 4: Build and Push Docker Image
       - name: Build and Push Docker Image
         run: |
-          docker build -t niloomont/dynoform:latest -f DynoForm.backend/DynoForm.backend/Dockerfile DynoForm.backend/DynoForm.backend
-          docker build -t niloomont/dynoform:${{ github.sha }} -f DynoForm.backend/DynoForm.backend/Dockerfile DynoForm.backend/DynoForm.backend
-          docker push niloomont/dynoform:latest
-          docker push niloomont/dynoform:${{ github.sha }}
+          docker build -t niloomont/dynoform-frontend:latest -f Dockerfile .
+          docker push niloomont/dynoform-frontend:latest
