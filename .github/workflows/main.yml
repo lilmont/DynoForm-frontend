@@ -28,5 +28,5 @@ jobs:
       # Step 4: Build and Push Docker Image
       - name: Build and Push Docker Image
         run: |
-          docker build -t niloomont/dynoform:latest -f DynoForm.frontend/DynoForm.frontend/Dockerfile DynoForm.frontend/DynoForm.frontend
+          docker build -t niloomont/dynoform:latest -f DynoForm.frontend/Dockerfile DynoForm.frontend
           docker push niloomont/dynoform:latest
