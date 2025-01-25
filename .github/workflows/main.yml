@@ -29,4 +29,4 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           docker build -t niloomont/dynoform:front -f DynoForm.frontend/Dockerfile DynoForm.frontend
-          docker push niloomont/dynoform:latest
+          docker push niloomont/dynoform:front
