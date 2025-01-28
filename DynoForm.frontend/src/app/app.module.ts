@@ -7,6 +7,7 @@ import { FormioModule } from '@formio/angular';
 import { provideHttpClient } from '@angular/common/http';
 import { PrismService } from './services/Prism.service';
 import { LandingComponent } from './landing/landing.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,12 @@ import { LandingComponent } from './landing/landing.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormioModule
+    FormioModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),
   ],
   providers: [PrismService, provideHttpClient()],
   bootstrap: [AppComponent]
