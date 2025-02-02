@@ -2,11 +2,14 @@
     <div class="form-list-header">
         <h2 class="title">Available Forms</h2>
         <p class="subtitle">Select a form to view or edit</p>
+
+        <!-- Search Input -->
+        <input type="text" class="search-input" [(ngModel)]="searchQuery" placeholder="Search forms..." />
     </div>
 
     <div class="form-list-container">
         <ul class="form-list">
-            <li class="form-item" *ngFor="let form of forms">
+            <li class="form-item" *ngFor="let form of filteredForms()" @listAnimation>
                 <h5 class="form-title">{{ form.Title }}</h5>
                 <p class="form-date">Created on: {{ form.CreatedDate | date: 'shortDate' }}</p>
 
