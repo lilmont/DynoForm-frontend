@@ -8,6 +8,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { PrismService } from './services/Prism.service';
 import { LandingComponent } from './landing/landing.component';
 import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,11 +21,14 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserModule,
     AppRoutingModule,
     FormioModule,
+    BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [PrismService, provideHttpClient()],
   bootstrap: [AppComponent]
