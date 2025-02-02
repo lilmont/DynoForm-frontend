@@ -5,3 +5,90 @@
 // Override the font path for Font Awesome
 $fa-font-path: 'font-awesome/fonts';
 @import 'font-awesome/scss/font-awesome.scss';
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+    /* Default font */
+}
+
+/* Position the toastr container at the bottom-right */
+.toast-container {
+    position: fixed !important;
+    bottom: 20px !important;
+    /* Space from the bottom of the viewport */
+    right: 20px !important;
+    /* Space from the right of the viewport */
+    z-index: 9999 !important;
+    /* Ensure it's above other elements */
+    pointer-events: none;
+    /* Prevent blocking interaction with underlying content */
+}
+
+/* Toast appearance for error messages */
+.toast-error {
+    background-color: #e53935 !important;
+    /* Better red */
+    color: white !important;
+    /* White text */
+    font-weight: bold;
+    /* Bold text */
+    border-radius: 12px !important;
+    /* Rounded edges */
+    padding: 16px 20px !important;
+    /* Proper padding for text */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    /* Soft shadow for a modern look */
+    text-align: left;
+    /* Center align text */
+    max-width: 300px;
+    /* Optional: Set a max width */
+    margin-bottom: 10px !important;
+}
+
+.toast-success {
+    background-color: #4CAF50 !important;
+    /* Green background */
+    color: white !important;
+    /* White text */
+    font-weight: bold;
+    /* Bold text */
+    border-radius: 12px !important;
+    /* Rounded edges */
+    padding: 16px 20px !important;
+    /* Proper padding for text */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    /* Soft shadow for a modern look */
+    text-align: left;
+    /* Left align text */
+    max-width: 300px;
+    /* Optional: Set a max width */
+    margin-bottom: 10px !important;
+}
+
+/* General toast style */
+.toast {
+    font-size: 16px;
+    /* Slightly larger font for better readability */
+    line-height: 1.5;
+    /* Improve text spacing */
+    pointer-events: auto;
+    /* Allow interaction for close button */
+}
+
+/* Adjust close button styles */
+.toast-close-button {
+    color: white !important;
+    /* White close button for consistency */
+    font-size: 18px;
+    /* Larger close button for accessibility */
+    opacity: 0.8;
+    /* Slightly transparent for a softer look */
+    margin-left: 10px;
+    /* Space from the edge */
+    cursor: pointer;
+    /* Show pointer cursor */
+}
