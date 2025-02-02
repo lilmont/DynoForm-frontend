@@ -12,115 +12,118 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './form-builder.component.html',
   styleUrl: './form-builder.component.scss'
 })
-export class FormBuilderComponent implements AfterViewInit, OnInit {
+export class FormBuilderComponent implements OnInit, AfterViewInit {
   public model: Form = new Form();
-  private apiUrl = environment.apiUrl;
-  @ViewChild('json', { static: true }) jsonElement?: ElementRef;
-  @ViewChild('code', { static: true }) codeElement?: ElementRef;
-  private formId: string = '';
-  public form: Object = {
-    components: []
-  };
+  public form: Object = { components: [] };
   public refreshForm: EventEmitter<FormioRefreshValue> = new EventEmitter();
+  private apiUrl = environment.apiUrl;
+  private formId: string = '';
 
-  constructor(public prism: PrismService, private http: HttpClient, private route: ActivatedRoute, private toastr: ToastrService) {
-    this.form = { components: [] };
-  }
+  @ViewChild('json', { static: true }) jsonElement?: ElementRef;
+
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private toastr: ToastrService,
+    private prism: PrismService
+  ) { }
+
   ngOnInit(): void {
-    this.formId = this.route.snapshot.paramMap.get('id') ?? ''
-
+    this.formId = this.route.snapshot.paramMap.get('id') ?? '';
     if (this.formId) {
-      this.http.get<any>(
-        `${this.apiUrl}/FormGenerator/details?Id=${this.formId}`
-      ).subscribe({
+      this.loadFormDetails(this.formId);
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.prism.init();
+  }
+
+  private loadFormDetails(formId: string): void {
+    this.http.get<any>(`${this.apiUrl}/FormGenerator/details?Id=${formId}`)
+      .subscribe({
         next: (response) => {
           const componentsObj = JSON.parse(response.form.jsonSchema);
-          this.model.Id = response.form.id;
-          this.model.Title = response.form.title;
-          this.form = { ...this.form, components: componentsObj.components };
-          if (this.jsonElement)
+          this.model = {
+            Id: response.form.id,
+            Title: response.form.title,
+            JsonSchema: response.form.jsonSchema
+          };
+          this.form = { components: componentsObj.components };
+
+          if (this.jsonElement) {
             this.jsonElement.nativeElement.innerHTML = response.form.jsonSchema;
+          }
         },
         error: (error) => {
           console.error('Error loading form:', error);
         }
       });
+  }
+
+  onChange(event: any): void {
+    if (this.jsonElement) {
+      this.jsonElement.nativeElement.innerHTML = JSON.stringify(event.form, null, 4);
+    }
+    this.refreshForm.emit({ property: 'form', value: event.form });
+  }
+
+  onSave(): void {
+    if (!this.jsonElement || !this.jsonElement.nativeElement.innerHTML || !this.model.Title.trim()) {
+      this.showValidationErrors();
+      return;
+    }
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+    this.model.JsonSchema = this.jsonElement.nativeElement.innerHTML;
+
+    if (this.isNewForm()) {
+      this.createForm(headers);
+    } else {
+      this.updateForm(headers);
     }
   }
 
-  onChange(event: any) {
-    if (this.jsonElement) {
-      this.jsonElement.nativeElement.innerHTML = '';
-      this.jsonElement.nativeElement.appendChild(document.createTextNode(JSON.stringify(event.form, null, 4)));
-    }
-    this.refreshForm.emit({
-      property: 'form',
-      value: event.form
-    });
+  private isNewForm(): boolean {
+    return this.model.Id === '00000000-0000-0000-0000-000000000000';
   }
 
-  ngAfterViewInit() {
-    this.prism.init();
-  }
+  private createForm(headers: HttpHeaders): void {
+    const newForm = { Title: this.model.Title, JsonSchema: this.model.JsonSchema };
 
-  OnSaveButton() {
-    if (this.jsonElement) {
-      if (this.jsonElement.nativeElement.innerHTML === ''
-        || this.model.Title === ''
-      ) {
-        if (this.jsonElement.nativeElement.innerHTML === '')
-          this.toastr.error('Form cannot be empty', 'Error');
-        if (this.model.Title === '')
-          this.toastr.error('Title cannot be empty', 'Error');
-        return;
-      }
-
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      });
-      if (this.model.Id === '00000000-0000-0000-0000-000000000000') {
-        const newForm = new Form();
-        newForm.Title = this.model.Title,
-          newForm.JsonSchema = this.jsonElement.nativeElement.innerHTML;
-
-        this.http.post(`${this.apiUrl}/FormGenerator/add`, newForm, { headers }).subscribe({
-          next: (response: any) => {
-            this.toastr.success('Form created successfully', 'Success');
-            if (response?.formId) {
-              window.location.href = `${window.location.origin}${window.location.pathname}/${response.formId}`;
-            }
-          },
-          error: (error) => {
-            this.toastr.error('Error creating form:', 'Error');
+    this.http.post(`${this.apiUrl}/FormGenerator/add`, newForm, { headers }).subscribe({
+      next: (response: any) => {
+        this.toastr.success('Form created successfully', 'Success');
+        this.toastr.success('Form created successfully', 'Success').onHidden.subscribe(() => {
+          if (response?.formId) {
+            window.location.href = `${window.location.origin}${window.location.pathname}/${response.formId}`;
           }
         });
-      }
-      else {
-        this.model.JsonSchema = this.jsonElement.nativeElement.innerHTML;
-        this.http.post(`${this.apiUrl}/FormGenerator/edit`, this.model, { headers }).subscribe({
-          next: (response) => {
-            this.toastr.success('Form updated successfully', 'Success');
-            this.loadFormDetails();
-          },
-          error: (error) => {
-            this.toastr.error('Error creating form:', 'Error');
-          }
-        });
-      }
-    }
-  }
-
-  loadFormDetails() {
-    this.http.get<any>(`${this.apiUrl}/details?Id=${this.model.Id}`).subscribe({
-      next: (response) => {
-        const componentsObj = JSON.parse(response.form.jsonSchema);
-        this.form = { ...this.form, components: componentsObj.components };
       },
-      error: (error) => {
-        console.error('Error loading form:', error);
+      error: () => {
+        this.toastr.error('Error creating form', 'Error');
       }
     });
   }
 
+  private updateForm(headers: HttpHeaders): void {
+    this.http.post(`${this.apiUrl}/FormGenerator/edit`, this.model, { headers }).subscribe({
+      next: () => {
+        this.toastr.success('Form updated successfully', 'Success');
+        this.loadFormDetails(this.model.Id);
+      },
+      error: () => {
+        this.toastr.error('Error updating form', 'Error');
+      }
+    });
+  }
+
+  private showValidationErrors(): void {
+    if (!this.jsonElement?.nativeElement.innerHTML) {
+      this.toastr.error('Form cannot be empty', 'Error');
+    }
+    if (!this.model.Title.trim()) {
+      this.toastr.error('Title cannot be empty', 'Error');
+    }
+  }
 }
