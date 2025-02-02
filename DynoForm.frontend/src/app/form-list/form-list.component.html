@@ -1,0 +1,20 @@
+<div class="form-list-page">
+    <div class="form-list-header">
+        <h2 class="title">Available Forms</h2>
+        <p class="subtitle">Select a form to view or edit</p>
+    </div>
+
+    <div class="form-list-container">
+        <ul class="form-list">
+            <li class="form-item" *ngFor="let form of forms">
+                <h5 class="form-title">{{ form.Title }}</h5>
+                <p class="form-date">Created on: {{ form.CreatedDate | date: 'shortDate' }}</p>
+
+                <div class="button-group">
+                    <button class="cta-button edit-button" (click)="editForm(form.Id)">Edit Form</button>
+                    <button class="cta-button use-button" (click)="useForm(form.Id)">Use Form</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

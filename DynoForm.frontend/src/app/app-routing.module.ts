@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormBuilderComponent } from './form-builder/form-builder.component';
 import { LandingComponent } from './landing/landing.component';
+import { FormListComponent } from './form-list/form-list.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path: 'add-form',
     component: FormBuilderComponent,
+  },
+  {
+    path: 'forms',
+    component: FormListComponent,
   },
   {
     path: '**',

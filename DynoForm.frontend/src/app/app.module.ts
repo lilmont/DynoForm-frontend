@@ -10,12 +10,14 @@ import { LandingComponent } from './landing/landing.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormListComponent } from './form-list/form-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FormBuilderComponent,
-    LandingComponent
+    LandingComponent,
+    FormListComponent
   ],
   imports: [
     BrowserModule,

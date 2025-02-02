@@ -1,0 +1,137 @@
+/* Form List Page Styling */
+.form-list-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #4a148c, #2a0944);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.form-list-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-list-header .title {
+    font-size: 2.5rem;
+    color: #ffd700;
+    font-family: 'Lora', serif;
+    font-weight: 600;
+}
+
+.form-list-header .subtitle {
+    font-size: 1.3rem;
+    color: #e0e0e0;
+    font-family: 'Lora', serif;
+    font-weight: 400;
+}
+
+.form-list-container {
+    max-width: 800px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.form-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.form-item {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.form-item:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.02);
+}
+
+.form-title {
+    font-size: 1.2rem;
+    font-family: 'Lora', serif;
+    font-weight: 500;
+    color: #ffd700;
+}
+
+.form-date {
+    font-size: 0.9rem;
+    font-family: 'Open Sans', sans-serif;
+    color: #e0e0e0;
+}
+
+.cta-button {
+    background-color: #ffd700;
+    color: #4a148c;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-family: 'Open Sans', sans-serif;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+.cta-button:hover {
+    background-color: #e6bf00;
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-list-header .title {
+        font-size: 2rem;
+    }
+
+    .form-list-header .subtitle {
+        font-size: 1.1rem;
+    }
+
+    .form-title {
+        font-size: 1rem;
+    }
+
+    .form-date {
+        font-size: 0.8rem;
+    }
+
+    .cta-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+
+.edit-button,
+.use-button {
+    background-color: #ffd700;
+    color: #4a148c;
+}
+
+.use-button:hover,
+.edit-button:hover {
+    background-color: #e6bf00;
+}
