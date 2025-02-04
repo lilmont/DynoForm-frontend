@@ -11,13 +11,15 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormListComponent } from './form-list/form-list.component';
+import { FormViewerComponent } from './form-viewer/form-viewer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FormBuilderComponent,
     LandingComponent,
-    FormListComponent
+    FormListComponent,
+    FormViewerComponent,
   ],
   imports: [
     BrowserModule,

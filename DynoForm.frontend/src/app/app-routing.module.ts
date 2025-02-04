@@ -3,11 +3,20 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormBuilderComponent } from './form-builder/form-builder.component';
 import { LandingComponent } from './landing/landing.component';
 import { FormListComponent } from './form-list/form-list.component';
+import { FormViewerComponent } from './form-viewer/form-viewer.component';
 
 const routes: Routes = [
   {
     path: '',
     component: LandingComponent, // Landing page for the root path
+  },
+  {
+    path: 'view-form/:id/:dataId',
+    component: FormViewerComponent,
+  },
+  {
+    path: 'view-form/:id',
+    component: FormViewerComponent,
   },
   {
     path: 'add-form/:id',

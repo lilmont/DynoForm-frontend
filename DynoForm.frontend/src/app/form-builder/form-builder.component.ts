@@ -93,7 +93,6 @@ export class FormBuilderComponent implements OnInit, AfterViewInit {
 
     this.http.post(`${this.apiUrl}/FormGenerator/add`, newForm, { headers }).subscribe({
       next: (response: any) => {
-        this.toastr.success('Form created successfully', 'Success');
         this.toastr.success('Form created successfully', 'Success').onHidden.subscribe(() => {
           if (response?.formId) {
             window.location.href = `${window.location.origin}${window.location.pathname}/${response.formId}`;
