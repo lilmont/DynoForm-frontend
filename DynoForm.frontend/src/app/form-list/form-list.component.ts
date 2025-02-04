@@ -63,6 +63,6 @@ export class FormListComponent implements OnInit {
   }
 
   useForm(formId: string) {
-
+    this.router.navigate([`/view-form/${formId}`]);
   }
 }
