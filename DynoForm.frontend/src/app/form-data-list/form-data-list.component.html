@@ -1,0 +1,21 @@
+<div class="form-list-page">
+    <div class="form-list-header">
+        <h2 class="title">{{formTitle}}</h2>
+        <p class="subtitle">Displaying submitted form data for {{formTitle}}</p>
+    </div>
+
+    <div class="form-list-container">
+        <table class="form-data-table" *ngIf="data">
+            <thead>
+                <tr>
+                    <th *ngFor="let column of data.columns">{{ column }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of groupedRows">
+                    <td *ngFor="let column of data.columns">{{ row[column] || '-' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

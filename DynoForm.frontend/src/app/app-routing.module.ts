@@ -4,11 +4,16 @@ import { FormBuilderComponent } from './form-builder/form-builder.component';
 import { LandingComponent } from './landing/landing.component';
 import { FormListComponent } from './form-list/form-list.component';
 import { FormViewerComponent } from './form-viewer/form-viewer.component';
+import { FormDataListComponent } from './form-data-list/form-data-list.component';
 
 const routes: Routes = [
   {
     path: '',
     component: LandingComponent, // Landing page for the root path
+  },
+  {
+    path: 'form-data-list/:id',
+    component: FormDataListComponent,
   },
   {
     path: 'view-form/:id/:dataId',

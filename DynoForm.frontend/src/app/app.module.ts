@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormListComponent } from './form-list/form-list.component';
 import { FormViewerComponent } from './form-viewer/form-viewer.component';
+import { FormDataListComponent } from './form-data-list/form-data-list.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { FormViewerComponent } from './form-viewer/form-viewer.component';
     LandingComponent,
     FormListComponent,
     FormViewerComponent,
+    FormDataListComponent,
   ],
   imports: [
     BrowserModule,

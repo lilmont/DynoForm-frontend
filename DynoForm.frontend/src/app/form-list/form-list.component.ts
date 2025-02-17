@@ -65,4 +65,8 @@ export class FormListComponent implements OnInit {
   useForm(formId: string) {
     this.router.navigate([`/view-form/${formId}`]);
   }
+
+  getFormData(formId: string) {
+    this.router.navigate([`/form-data-list/${formId}`]);
+  }
 }
